@@ -1,0 +1,34 @@
+﻿<h1>HEllo From First View 
+    Welcome MVC
+</h1>
+<style>
+h1{
+    color:red;
+}
+</style>
+
+<script>
+console.log("hello");
+</script>
+<!--Razor Stynax (Server side)-->
+<!--Block Of Code-->
+@{
+    int x =10;
+    int y = x+10;
+}
+<!--Inline Statment-->
+@(x+y)
+<!--Condtion Statment-->
+@if (x > y){
+
+    <h2>X greater than Y</h2>
+}
+else
+{
+    <h2>Y=@y Greater Than X=@x</h2>    
+}
+<!--Looping Statment-->
+@for(int i = 0; i < 10; i++)
+{
+    <li>@i</li>
+}
