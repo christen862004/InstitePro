@@ -1,13 +1,17 @@
-﻿<!--List<Student>-->
+﻿@model List<Student>
+
+<!--List<Student>-->
  <table class="table table-bordered table-hover">
 
-   @foreach (Student item in Model)
+   @foreach (var item in Model)
     {
         <tr>
             <td>@item.Id</td>
             <td>@item.Name</td>
             <td>@item.ImageURL</td>
             <td><img src="/Images/@item.ImageURL" style="width:100px"/></td>
+            <td><a href="/Student/DEtails?id=@item.Id">DEtails</a></td>
         </tr>
     }
  </table> 
+ 

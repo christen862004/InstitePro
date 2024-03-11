@@ -6,7 +6,7 @@ namespace InstitePro.Controllers
     public class StudentController : Controller
     {
         StudentBL studentBL = new StudentBL();
-
+        
         //Student/all
         public IActionResult All()
        {

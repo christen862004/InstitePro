@@ -1,0 +1,48 @@
+﻿@model Employee
+@{
+    //ViewData["Title"] = "Details";
+}
+<!--
+
+1) Key right "Magic string"
+2) return object ==>need type Cast
+-->
+<h1>Details</h1>
+<h2 style="color:@ViewData["clr"]">@Model.Name</h2>
+
+
+
+@ViewData["msg"]
+@ViewData["Temp"]
+<hr />
+Viewdata @(int.Parse(ViewData["Temp"].ToString())+10)
+<hr />
+viewBag @(ViewBag.Temp+10)
+
+
+
+
+
+
+@ViewBag.CurrentDate
+@ViewData["CurrentDate"]
+
+<select class="form form-control">
+    @foreach (var item in (List<string>)ViewData["brch"])
+    {
+        <option>@item</option>
+    }
+</select>
+
+<select class="form form-control">
+    @foreach (var item in ViewBag.brch)
+    {
+        <option>@item</option>
+    }
+</select>
+
+<!--
+Model ==>Emplyee
+ViewData ==>4 key
+
+-->
