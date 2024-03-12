@@ -2,7 +2,23 @@
 {
     public class TestClass
     {
-        
+       public void MEthod1()
+        {
+            int x = 10;
+            Method2();//-----------------
+            int y = x + 10;
+        }
+       public  void Method2()
+        {
+            int z;
+        }
+        public void MEthod3()
+        {
+            Method2();
+
+        }
+
+
         private int x;
 
         public int Prop1
@@ -22,13 +38,15 @@
 
 
         public List<int> list1= new List<int>();
-        public void Add(int  x,int y)
+        public dynamic Add(int  x,int y)
         {
             dynamic z = 10;
             dynamic cc = "hello";
             dynamic obj = new Student();
             obj=z + cc;
-//            x + y;
+            //            x + y;
+            return z;
+            obj=z + cc;
         }
         public void testAdd()
         {

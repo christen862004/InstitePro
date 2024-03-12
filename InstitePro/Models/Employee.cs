@@ -13,6 +13,7 @@ namespace InstitePro.Models
         
         [ForeignKey("Department")]//property name Department
         public int DepartmentId { get; set; }
+        //public bool Isdelete { get; set; } = false;
 
         public Department Department { get; set; }
     }

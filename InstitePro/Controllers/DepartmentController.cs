@@ -1,5 +1,4 @@
-﻿using InstitePro.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace InstitePro.Controllers
 {
