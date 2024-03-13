@@ -23,7 +23,7 @@ namespace InstitePro.Controllers
         {
             //logic
             string n=HttpContext.Session.GetString("Name");
-            int a =  HttpContext.Session.GetInt32("Age").Value;
+            int? a = HttpContext.Session.GetInt32("Age");//.Value;
             //logic
             return Content($"NAme={n} \t Age={a}");
         }

@@ -7,10 +7,15 @@ namespace InstitePro.Controllers
     public class EmployeeController : Controller
     {
         ITIContext context = new ITIContext();
-        //Employee/DEatisl?id=1
-        public IActionResult Details(int id)
+        public IActionResult Index()
         {
-
+            return View("Index", context.Employee.ToList());
+        }
+        //Employee/DEatisl?id=1&age=112
+        //Employee/DEtails/1?age=12
+        public IActionResult Details(int id,int age)//name paramter input 
+        {
+            //Request.Form.con
             ViewData["msg"] = "Hello";
             List<string> branches = new List<string>();
             branches.Add("Smart");
@@ -54,6 +59,38 @@ namespace InstitePro.Controllers
             empVM.Branches = new List<string>() { "Alex", "Assiut", "Cairo", "New Capital" }; ;
             return View("DetailsVM",empVM);
             //View=DetailsVM ,Model =EmployeeNameWithBrchListMsgTempColorViewModel
+        }
+
+        [HttpGet]//click on link
+        public IActionResult Edit(int id)
+        {
+            Employee empModel = context.Employee.FirstOrDefault(e => e.Id == id);
+            if(empModel == null)
+                return NotFound("Emp Not Found");
+            EmployeeWithDeptListViewModel empVM = new EmployeeWithDeptListViewModel();
+            empVM.Name = empModel.Name;
+            empVM.Id = empModel.Id;
+            empVM.JobTitle = empModel.JobTitle;
+            empVM.DepartmentId = empModel.DepartmentId;
+            empVM.Salary = empModel.Salary;
+            empVM.Address = empModel.Address;
+            empVM.ImageUrl = empModel.ImageUrl;
+            empVM.DeptList = context.Department.ToList(); ;
+
+            return View("Edit", empVM);//view =Edit ,Model =ViewModel
+        }
+        [HttpPost]
+        public IActionResult SaveEdit(Employee employee)
+        {
+            if (employee.Name != null)
+            {
+                //get old using context
+                //update from new set old
+                context.Update(employee);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View("Edit", employee);
         }
     }
 }
