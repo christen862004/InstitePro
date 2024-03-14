@@ -2,8 +2,16 @@
 {
     public class TestClass
     {
+        public void test1(EmployeeWithDeptListViewModel model)
+        {
+
+        }
        public void MEthod1()
         {
+         //   test1(new Employee());
+
+
+
             int x = 10;
             Method2();//-----------------
             int y = x + 10;

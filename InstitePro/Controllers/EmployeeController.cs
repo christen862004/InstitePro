@@ -80,17 +80,48 @@ namespace InstitePro.Controllers
             return View("Edit", empVM);//view =Edit ,Model =ViewModel
         }
         [HttpPost]
-        public IActionResult SaveEdit(Employee employee)
+        public IActionResult SaveEdit(Employee employeeModelReq)//Vm
         {
-            if (employee.Name != null)
+            if (employeeModelReq.Name != null)
             {
                 //get old using context
                 //update from new set old
-                context.Update(employee);
+                context.Update(employeeModelReq);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View("Edit", employee);
+            EmployeeWithDeptListViewModel empVM = new EmployeeWithDeptListViewModel();
+            empVM.Name = employeeModelReq.Name;
+            empVM.Id   = employeeModelReq.Id;
+            empVM.Address = employeeModelReq.Address;
+            empVM.JobTitle = employeeModelReq.JobTitle;
+            empVM.Salary = employeeModelReq.Salary;
+            empVM.DepartmentId = employeeModelReq.DepartmentId;
+            empVM.ImageUrl= employeeModelReq.ImageUrl;
+           
+            empVM.DeptList = context.Department.ToList();
+
+            return View("Edit", empVM);//Model =Employee
+           // return RedirectToAction("Edit", new {id=employeeModelReq.Id});
+        }
+
+        public IActionResult New()
+        {
+            ViewData["DeptList"] = context.Department.ToList();
+            return View("New");//Model Null
+        }
+
+        [HttpPost]
+        public IActionResult SaveNew(Employee empModelFromREquest) {
+            if(empModelFromREquest.Name != null)
+            {
+                context.Add(empModelFromREquest); 
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewData["DeptList"] = context.Department.ToList();
+            return View("New", empModelFromREquest);//Model +List
+        
         }
     }
 }

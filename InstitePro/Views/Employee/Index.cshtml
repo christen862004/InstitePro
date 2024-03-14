@@ -1,9 +1,18 @@
 ﻿@model List<Employee>
 @{
     ViewData["Title"] = "Index";
+    Dictionary<string, string> dic = new Dictionary<string, string>();
+    dic["id"] = "1";
+    dic["name"] = "asdas";
 }
 
 <h1>Index</h1>
+<a href="/Employee/NEw">NEw</a>
+@Html.ActionLink("Add","New","Employee")
+<a asp-action="New" asp-controller="Employee">New</a>
+
+@* <a href="/Employee/Details/1?name=ahmed">new</a> *@
+
 
 <table class="table table-bordered table-hover">
     <tr>
@@ -17,7 +26,10 @@
         <tr>
             <td>@item.Id</td>
             <td>@item.Name</td>
-            <td><a href="/Employee/Details/@item.Id">DEtails</a></td>
+            <td>
+                <a asp-action="Details" asp-controller="Employee"
+                asp-route-id="@item.Id" asp-route-name="Ahmed" asp-all-route-data="dic">New</a>
+            </td>
             <td><a href="/Employee/Edit/@item.Id">Edit</a></td>
         </tr>
     }
