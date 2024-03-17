@@ -2,9 +2,11 @@
 @model List<Department>
 @{
     ViewData["Title"] = "Index";
+    Layout = "_AdvLayout";
 }
 <a href="/Department/NEW">New</a>
 <h1>Index</h1>
+<div id="div1"></div>
 <table class="table table-bordered table-hover">
     <tr>
         <th>No</th>
@@ -15,7 +17,32 @@
         <tr>
             <td>@item.Id</td>
             <td>@item.Name</td>
+            <td><a asp-action="Details" asp-controller="Department" asp-route-id="@item.Id">
+                DEtails</a></td>
+            <td>
+                <a onclick="GetDeptCard(@item.Id)" href="#">
+                    DEtails Partial
+                </a>
+            </td>
         </tr>
     }
 </table>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function GetDeptCard(deptId){
+        event.preventDefault();//href
+        $.ajax(
+            {
+                url: "/Department/GetPartialCard/" + deptId,
+                success: function (result) 
+                {
+                    console.log(result)
+                    //$("#div1").html(result);//dom
+                    $("#div1").html(result.name);
+
+                }
+        
+            });
+    }
+</script>

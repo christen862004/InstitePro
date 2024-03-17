@@ -1,0 +1,9 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "DEtails";
+}
+
+<h1>DEtails</h1>
+
+<partial name="_DeptCard"/>
+<a href="/Department/Edit/@Model.Id" class="card-link">Edit</a>

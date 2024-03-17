@@ -1,0 +1,9 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>DEtails</h1>
+<partial name="_DeptCard" ></partial>
+
+<a href="/Department/ConfirmDelete/@Model.Id" class="card-link">Confirm Delete</a>
