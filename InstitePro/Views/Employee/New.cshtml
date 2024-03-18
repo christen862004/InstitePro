@@ -8,25 +8,31 @@
 
 <h1>New</h1>
 <form asp-action="SaveNew" asp-controller="Employee"  method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Address">Loacl Address</label>
         <input asp-for="Address" class="form form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Salary"></label>
         <input asp-for="Salary" class="form form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="JobTitle"></label>
         <input asp-for="JobTitle" class="form form-control" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="DepartmentId"></label>
@@ -36,6 +42,9 @@
                 class="form form-control">
                 <option value="0">---Select Department--</option>
         </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
     </div>
     <input type="submit" value="Create" class="btn btn-success" />
 </form>
+
+<partial name="_ValidationScriptsPartial" />

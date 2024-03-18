@@ -6,12 +6,13 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div style="background-color:brown;font-size:30px;height:150px">Head
 
-        <div style="background-color:rosybrown;height:50px">
+    <header style="background-color:brown;font-size:30px;height:150px">Head
+
+        <aside style="background-color:rosybrown;height:50px">
             @RenderSection("HeaderSection")
-        </div>
-    </div>
+        </aside>
+    </header>
     <div style="background-color:rosybrown;height:300px">
         @RenderBody()
     </div>

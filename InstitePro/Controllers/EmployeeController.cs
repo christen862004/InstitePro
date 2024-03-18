@@ -112,16 +112,34 @@ namespace InstitePro.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveNew(Employee empModelFromREquest) {
-            if(empModelFromREquest.Name != null)
+        public IActionResult SaveNew(Employee empModelFromREquest)
+        {
+            //if(empModelFromREquest.Name != null )
+            if (ModelState.IsValid == true)
             {
-                context.Add(empModelFromREquest); 
-                context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    context.Add(empModelFromREquest);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    //  ModelState.AddModelError("DepartmentId", "Please Select Department");
+                    ModelState.AddModelError("error", ex.InnerException.Message);
+                }
             }
             ViewData["DeptList"] = context.Department.ToList();
             return View("New", empModelFromREquest);//Model +List
+            
+        }
         
+        public IActionResult CheckSalary(int Salary,string JobTitle)
+        {
+            if (Salary > 6000)
+                return Json(true);
+            else
+                return Json(false);
         }
     }
 }
