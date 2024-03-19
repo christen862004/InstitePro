@@ -6,10 +6,21 @@ namespace InstitePro.Controllers
 {
     public class EmployeeController : Controller
     {
-        ITIContext context = new ITIContext();
+        // ITIContext context = new ITIContext();
+        IEmployeeRepository employeeRepository;
+        IDepartmentRepository departmentRepository;
+
+        public EmployeeController
+            (IDepartmentRepository deptRep,IEmployeeRepository empRepo)//inject
+        {
+            employeeRepository = empRepo;
+            departmentRepository = deptRep;// new DepartmentRepository();//create
+        }
+
+
         public IActionResult Index()
         {
-            return View("Index", context.Employee.ToList());
+            return View("Index", employeeRepository.GetAll());
         }
         //Employee/DEatisl?id=1&age=112
         //Employee/DEtails/1?age=12
@@ -36,9 +47,9 @@ namespace InstitePro.Controllers
 
             ViewBag.CurrentDate = DateTime.Now;//ViewData["CurrentDate"]=DateTime.Now
 
-            Employee EmpModel =
-                context.Employee.Include(e => e.Department)                
-                .FirstOrDefault(e=>e.Id==id);
+            Employee EmpModel = employeeRepository.GetById(id);
+                //context.Employee.Include(e => e.Department)                
+                //.FirstOrDefault(e=>e.Id==id);
             
             return View("Details",EmpModel);//View Deatisl ,Model type Employee
         }
@@ -46,7 +57,7 @@ namespace InstitePro.Controllers
         public IActionResult DetailsVM(int id)
         {
             Employee EmpModel =
-                context.Employee.FirstOrDefault(e => e.Id == id);
+                employeeRepository.GetById(id);
 
             //Mapping --automapper
             EmployeeNameWithBrchListMsgTempColorViewModel empVM =
@@ -64,7 +75,7 @@ namespace InstitePro.Controllers
         [HttpGet]//click on link
         public IActionResult Edit(int id)
         {
-            Employee empModel = context.Employee.FirstOrDefault(e => e.Id == id);
+            Employee empModel = employeeRepository.GetById(id);
             if(empModel == null)
                 return NotFound("Emp Not Found");
             EmployeeWithDeptListViewModel empVM = new EmployeeWithDeptListViewModel();
@@ -75,7 +86,7 @@ namespace InstitePro.Controllers
             empVM.Salary = empModel.Salary;
             empVM.Address = empModel.Address;
             empVM.ImageUrl = empModel.ImageUrl;
-            empVM.DeptList = context.Department.ToList(); ;
+            empVM.DeptList = departmentRepository.GetAll() ;
 
             return View("Edit", empVM);//view =Edit ,Model =ViewModel
         }
@@ -86,8 +97,8 @@ namespace InstitePro.Controllers
             {
                 //get old using context
                 //update from new set old
-                context.Update(employeeModelReq);
-                context.SaveChanges();
+                employeeRepository.Update(employeeModelReq);
+                employeeRepository.Save();
                 return RedirectToAction("Index");
             }
             EmployeeWithDeptListViewModel empVM = new EmployeeWithDeptListViewModel();
@@ -99,7 +110,7 @@ namespace InstitePro.Controllers
             empVM.DepartmentId = employeeModelReq.DepartmentId;
             empVM.ImageUrl= employeeModelReq.ImageUrl;
            
-            empVM.DeptList = context.Department.ToList();
+            empVM.DeptList = departmentRepository.GetAll();
 
             return View("Edit", empVM);//Model =Employee
            // return RedirectToAction("Edit", new {id=employeeModelReq.Id});
@@ -107,7 +118,7 @@ namespace InstitePro.Controllers
 
         public IActionResult New()
         {
-            ViewData["DeptList"] = context.Department.ToList();
+            ViewData["DeptList"] = departmentRepository.GetAll();
             return View("New");//Model Null
         }
 
@@ -119,8 +130,8 @@ namespace InstitePro.Controllers
             {
                 try
                 {
-                    context.Add(empModelFromREquest);
-                    context.SaveChanges();
+                    employeeRepository.Insert(empModelFromREquest);
+                    employeeRepository.Save();
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -129,7 +140,7 @@ namespace InstitePro.Controllers
                     ModelState.AddModelError("error", ex.InnerException.Message);
                 }
             }
-            ViewData["DeptList"] = context.Department.ToList();
+            ViewData["DeptList"] = departmentRepository.GetAll();
             return View("New", empModelFromREquest);//Model +List
             
         }

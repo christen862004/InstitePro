@@ -1,35 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 
 namespace InstitePro.Controllers
 {
     public class DepartmentController : Controller
     {
+        //action by default can handel any reuest type(Get |Post)
+        //ITIContext context=new ITIContext();
+        IDepartmentRepository DepartmentRepository;
+        IEmployeeRepository EmployeeRepository;
+        //DEpartment/index
+
+        public DepartmentController(IDepartmentRepository DeptRepo,IEmployeeRepository empRepo)
+        {
+            DepartmentRepository = DeptRepo;
+            EmployeeRepository = empRepo;
+            
+        }
         //Department/GetEmpByDEptID?deptID=1
         public IActionResult GetEmpByDEptID(int deptID)
         {
-            var  employees = context.Employee
-                .Where(e => e.DepartmentId == deptID)
+            var  employees = EmployeeRepository.GetByDeptID(deptID)
                 .Select(e => new { e.Name,e.Id}).ToList();
             return Json(employees);
         }
         public IActionResult ShowDeptsEmp()
         {
-            List<Department> depts = context.Department.ToList();
+            List<Department> depts = DepartmentRepository.GetAll();
             return View("ShowDeptsEmp", depts);//List<DEpartment>
         }
 
 
 
-        //action by default can handel any reuest type(Get |Post)
-        ITIContext context=new ITIContext();
-        public DepartmentController()
-        {
-            
-        }
+        
 
         public IActionResult GetPartialCard(int id)
         {
-            Department deptModel=context.Department.FirstOrDefault(x => x.Id == id);
+            Department deptModel=DepartmentRepository.GetById(id);
             // return PartialView("_DeptCard",deptModel);
             return Json(deptModel);
         }
@@ -40,7 +48,7 @@ namespace InstitePro.Controllers
 
         public IActionResult Index()
         {
-            List<Department> deptListModel = context.Department.ToList();
+            List<Department> deptListModel = DepartmentRepository.GetAll();
             return View("Index",deptListModel);//View Index ,Model = List<department>
         }
         [HttpGet]//a - form method get
@@ -56,8 +64,8 @@ namespace InstitePro.Controllers
             //if(Request.Method != "POST")
             if (Dept.Name != null && Dept.ManagerName != null)
             {
-                context.Department.Add(Dept);
-                context.SaveChanges();
+                DepartmentRepository.Insert(Dept);
+                DepartmentRepository.Save();
 
                 //return RedirectToAction("Index");//index action in current controller
                 return RedirectToAction("Index");//index action in current controller
@@ -71,11 +79,11 @@ namespace InstitePro.Controllers
 
         public IActionResult DEtails(int id)
         {
-            return View("Details", context.Department.FirstOrDefault(d => d.Id == id));
+            return View("Details", DepartmentRepository.GetById(id));
         }
         public IActionResult Delete(int id)
         {
-            return View("Delete", context.Department.FirstOrDefault(d => d.Id == id));
+            return View("Delete", DepartmentRepository.GetById(id));
         }
     }
 }

@@ -1,12 +1,72 @@
-﻿namespace InstitePro.Models
+﻿using NuGet.Common;
+
+namespace InstitePro.Models
 {
+
+    public interface ISort {
+        List<int> Sort(List<int> list);
+    }
+    public class BubbleSort:ISort
+    {
+        public List<int> Sort(List<int> list)
+        {
+            return list;
+        }
+    }
+    public class SelectionSort:ISort
+    {
+        public List<int> Sort(List<int> list)
+        {
+            return list;
+        }
+    }
+    public class ChrisSort:ISort
+    {
+        public List<int> Sort(List<int> list)
+        {
+            return list;
+        }
+    }
+  
+    public class TestDay8
+    {
+        List<int> list;
+        ISort sortObj;//DIP
+
+        public TestDay8(ISort sortObj)
+        {
+            list = new List<int>();
+            this.sortObj = sortObj;
+        }
+        public void SortList()
+        {
+            sortObj.Sort(list);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public class TestClass
     {
+
         public void test1(EmployeeWithDeptListViewModel model)
         {
+            TestDay8 obj1 = new TestDay8(new BubbleSort());
+            TestDay8 obj2 = new TestDay8(new SelectionSort());
+            TestDay8 obj3 = new TestDay8(new ChrisSort());
+
 
         }
-       public void MEthod1()
+        public void MEthod1()
         {
          //   test1(new Employee());
 

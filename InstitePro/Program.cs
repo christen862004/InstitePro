@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace InstitePro
 {
     public class Program
@@ -7,13 +9,37 @@ namespace InstitePro
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            /*
+             1) framwork service  .Net already Register
+             2) Framowrok Service .Net not Already register
+             3) Custom service not .Net not Regiter 
+             */
+
+
+
+
+
+
+
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession(
                 options =>
                 {
                     options.IdleTimeout = TimeSpan.FromMinutes(30);
                 });//setting middleware
-           
+
+            
+            builder.Services.AddDbContext<ITIContext>(
+                options => { 
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+                });
+
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();//register
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+           /*Service */
+
             var app = builder.Build();
             #region inline Middleware
             //app.Use(async (httpContext, next) => {

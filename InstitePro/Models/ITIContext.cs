@@ -12,6 +12,10 @@ namespace InstitePro.Models
         {
             
         }
+        public ITIContext(DbContextOptions<ITIContext> options) : base(options)
+        {
+
+        }
         //
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
