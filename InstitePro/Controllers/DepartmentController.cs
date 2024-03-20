@@ -1,9 +1,12 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 
 namespace InstitePro.Controllers
 {
+    //[xyz]
     public class DepartmentController : Controller
     {
         //action by default can handel any reuest type(Get |Post)
@@ -14,17 +17,22 @@ namespace InstitePro.Controllers
 
         public DepartmentController(IDepartmentRepository DeptRepo,IEmployeeRepository empRepo)
         {
+            
             DepartmentRepository = DeptRepo;
             EmployeeRepository = empRepo;
             
         }
         //Department/GetEmpByDEptID?deptID=1
+       // [xyz]
         public IActionResult GetEmpByDEptID(int deptID)
         {
-            var  employees = EmployeeRepository.GetByDeptID(deptID)
-                .Select(e => new { e.Name,e.Id}).ToList();
-            return Json(employees);
+                var employees = EmployeeRepository.GetByDeptID(deptID)
+                    .Select(e => new { e.Name, e.Id }).ToList();
+                //----------------
+                return Json(employees);
+           
         }
+        //[xyz]
         public IActionResult ShowDeptsEmp()
         {
             List<Department> depts = DepartmentRepository.GetAll();
@@ -45,11 +53,15 @@ namespace InstitePro.Controllers
 
 
 
-
+        //[Authorize]
         public IActionResult Index()
         {
-            List<Department> deptListModel = DepartmentRepository.GetAll();
-            return View("Index",deptListModel);//View Index ,Model = List<department>
+            if (User.Identity.IsAuthenticated == true)
+            {
+                List<Department> deptListModel = DepartmentRepository.GetAll();
+                return View("Index", deptListModel);//View Index ,Model = List<department>
+            }
+            return RedirectToAction("Loing");
         }
         [HttpGet]//a - form method get
         public IActionResult New()

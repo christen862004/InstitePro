@@ -3,6 +3,17 @@
 namespace InstitePro.Models
 {
 
+    //public class test1<T>
+    //{
+    //    public T prop1 { get; set; }
+    //}
+
+
+    //public class test2 : test1<int>
+    //{
+
+    //}
+
     public interface ISort {
         List<int> Sort(List<int> list);
     }

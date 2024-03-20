@@ -1,3 +1,5 @@
+using InstitePro.Filtters;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstitePro
@@ -15,14 +17,23 @@ namespace InstitePro
              3) Custom service not .Net not Regiter 
              */
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric=false;
+                options.Password.RequiredLength = 4;
+            })
+                .AddEntityFrameworkStores<ITIContext>();
 
 
 
 
 
+            //Global filtter attrinut
+            builder.Services.AddControllersWithViews(
+                //Boptions=>options.Filters.Add(new HandelErrorAttribute())
 
-
-            builder.Services.AddControllersWithViews();
+                );
             builder.Services.AddSession(
                 options =>
                 {

@@ -1,4 +1,6 @@
 using InstitePro.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,6 +9,7 @@ namespace InstitePro.Controllers
     //public 
     //inherit from Contoller
     //End With Controller
+   // [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,11 +19,14 @@ namespace InstitePro.Controllers
             _logger = logger;
         }
         //url/Home/Index
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            //IdentityUser
             return View();
         }
         //url:/Home/privacy
+        
         public IActionResult Privacy()
         {
             return View();

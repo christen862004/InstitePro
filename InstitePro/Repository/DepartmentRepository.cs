@@ -1,6 +1,8 @@
-﻿namespace InstitePro.Repository
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace InstitePro.Repository
 {
-    public class DepartmentRepository:IDepartmentRepository
+    public class DepartmentRepository:IDepartmentRepository 
     {
         ITIContext context ;
 
@@ -8,6 +10,7 @@
 
         public DepartmentRepository(ITIContext _context)
         {
+            
              Id = Guid.NewGuid().ToString();//unique
             context = _context;//new ITIContext();
         }
