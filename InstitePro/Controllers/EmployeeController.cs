@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace InstitePro.Controllers
 {
+    [Authorize]//account Role =Admin
     public class EmployeeController : Controller
     {
         // ITIContext context = new ITIContext();

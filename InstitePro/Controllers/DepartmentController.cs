@@ -53,15 +53,13 @@ namespace InstitePro.Controllers
 
 
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated == true)
-            {
+          
                 List<Department> deptListModel = DepartmentRepository.GetAll();
                 return View("Index", deptListModel);//View Index ,Model = List<department>
-            }
-            return RedirectToAction("Loing");
+          
         }
         [HttpGet]//a - form method get
         public IActionResult New()

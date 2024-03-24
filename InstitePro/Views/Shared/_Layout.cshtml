@@ -10,17 +10,7 @@
 </head>
 <body>
     <header>
-       <!--unsing Partial Nav-->
-       <!--Html Helper-->
-       @* @Html.Partial("_NavPartial") *@
-       @* @Html.PartialAsync("_NavPartial") *@
-      @*   @{
-            // Html.RenderPartial("_NavPartial");
-             await Html.RenderPartialAsync("_NAvPartial");
-        } *@
-        <!--Using Tag Helper-->
         <partial name="_NavPartial"></partial>
-       
     </header>
     <div class="container">
         <main role="main" class="pb-3" style="border:10px solid red">

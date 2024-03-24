@@ -22,8 +22,7 @@ namespace InstitePro
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric=false;
                 options.Password.RequiredLength = 4;
-            })
-                .AddEntityFrameworkStores<ITIContext>();
+            }).AddEntityFrameworkStores<ITIContext>();
 
 
 
@@ -90,7 +89,16 @@ namespace InstitePro
             app.UseSession();//default setting "Service"
 
             app.UseAuthorization();//perssion
+            //custom Route nameConvintion Route
+            app.MapControllerRoute("Route1", "A1/{name}/{age:int:range(10,50)}/{color?}"
+                , new{
+                    controller="Route",
+                    action="action1"
 
+                });
+            //app.MapControllerRoute("Route2", "{contoller=Route}/{action=action2}");
+
+            //map default route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
